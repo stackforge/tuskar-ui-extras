@@ -1,0 +1,124 @@
+{% load i18n %}
+{% load url from future %}
+{% load form_helpers %}
+
+<h4>{% trans "Available Deployment Roles" %}</h4>
+<form method="POST" action="." class="boxes-form">
+{% csrf_token %}
+{% include 'horizon/common/_form_errors.html' with form=form %}
+{% for role in roles %}
+  <div class="boxes-role-{{ role.name|slugify }} boxes-role">
+    {{ role.name|title }}
+  </div>
+{% endfor %}
+
+<h4>{% trans "Available Node Profiles" %}</h4>
+{% for flavor in flavors %}
+<div class="boxes-flavor">
+    <p>
+        <strong>Node Profile:</strong>
+        <i>{{ flavor.name }}</i>
+        {{ flavor.vcpus }} CPU,
+        {{ flavor.ram }}MB RAM,
+        {{ flavor.disk }}GB Disk
+    </p>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="boxes-drop">
+                <i class="fa fa-plus"></i>
+                Drop roles here
+            </div>
+        </div>
+        <div class="col-xs-9 boxes-nodes">
+            {% for node in flavor.nodes %}{% spaceless %}
+            <div class="boxes-node">free</div>
+            {% endspaceless %}{% endfor %}
+        </div>
+    </div>
+<div>
+{% endfor %}
+
+
+<hr>
+<button type="submit" class="btn btn-default">
+  <i class="fa fa-save"></i>
+  {% trans "Save changes" %}
+</button>
+</form>
+
+<script type="text/javascript">
+(window.$ || window.addHorizonLoadEvent)(function () {
+  $('div.boxes-role').draggable({
+      opacity: 0.5,
+      revert: 'invalid',
+      stack: 'div.boxes-role',
+  });
+  $('div.boxes-drop').droppable({
+      accept: 'div.boxes-role',
+      activeClass: 'boxes-active',
+  });
+});
+</script>
+
+<style type="text/css">
+.boxes-role {
+    display: inline-block;
+    padding: 6px;
+    border: 1px solid;
+    width: 120px;
+    cursor: move;
+    text-align: center;
+    border-radius: 2px;
+    background-color: #fce94f;
+    border-color: #edd400;
+    color: #c4a000;
+}
+.boxes-role-controller {
+    background-color: #fcaf3e;
+    border-color: #f57900;
+    color: #ce5c00;
+}
+.boxes-role-compute {
+    background-color: #8ae234;
+    border-color: #73d216;
+    color: #4e9a06;
+}
+.boxes-role-object-storage {
+    background-color: #729fcf;
+    border-color: #3465a4;
+    color: #204a87;
+}
+.boxes-role-block-storage {
+    background-color: #ad7fa8;
+    border-color: #75507b;
+    color: #5c3566;
+}
+.boxes-drop {
+    display: inline-block;
+    padding: 6px;
+    border: 1px dashed;
+    width: 120px;
+    cursor: move;
+    text-align: center;
+    border-radius: 2px;
+    background-color: #eee;
+    border-color: #666;
+    color: #444;
+}
+.boxes-active {
+    background-color: #999;
+    border-style: solid;
+}
+.boxes-node {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border-radius: 2px;
+    border: 1px solid #999;
+    background: #eee;
+    margin: 0 4px 4px 0;
+    text-align: center;
+    color: #666;
+    padding: 20px 4px 0 4px;
+}
+</style>
