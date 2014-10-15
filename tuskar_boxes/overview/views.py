@@ -19,7 +19,7 @@ from tuskar_boxes.overview import forms
 
 def flavor_nodes(request, flavor):
     """Lists all nodes that match the given flavor exactly."""
-    for node in api.node.Node.list(request):
+    for node in api.node.Node.list(request, maintenance=False):
         if all([
             int(node.cpus) == int(flavor.vcpus),
             int(node.memory_mb) == int(flavor.ram),
