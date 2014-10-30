@@ -38,16 +38,19 @@
                 </div>
             {% endspaceless %}{% endfor %}
             </div>
-            <div class="boxes-drop">
-                <div><i class="fa fa-plus"></i><br>
-                  {% trans "enroll a deployment role" %}</div>
-                <div class="boxes-roles-menu btn-group-vertical">
-                  {% for role in roles %}
-                  <div class="btn" data-role="{{ role.name }}">
-                    {{ role.name|title }}
-                  </div>
-                  {% endfor %}
-                </div>
+            <div class="btn-group boxes-drop-group">
+              <div class="boxes-drop" data-toggle="dropdown">
+                  <div><i class="fa fa-plus"></i><br>
+                    {% trans "enroll a deployment role" %}</div>
+              </div>
+              <ul class="boxes-roles-menu dropdown-menu" role="menu">
+                {% for role in roles %}
+                <li>
+                  <a href="#" data-role="{{ role.name }}"
+                    >{{ role.name|title }}</a>
+                </li>
+                {% endfor %}
+              </ul>
             </div>
         </div>
         <div class="col-xs-7 boxes-nodes">
@@ -89,7 +92,7 @@
         var role = 0;
         $flavor.find('div.boxes-nodes div.boxes-node').each(function () {
           var $this = $(this);
-          $this.removeClass('boxes-role-controller boxes-role-compute boxes-role-block-storage boxes-role-object-storage');
+          $this.removeClass('boxes-role-controller boxes-role-compute boxes-role-cinder-storage boxes-role-swift-storage');
           while (count >= roles[role_names[role]]) {
             role += 1;
             count = 0;
@@ -141,12 +144,9 @@
   update_boxes();
   $('input.number-picker').change(update_boxes);
 
-  $('.boxes-roles-menu').hide().parent().click(function () {
-      $(this).find('.boxes-roles-menu').toggle('fold', 100);
-  });
-  $('.boxes-roles-menu .btn').click(function () {
+  $('.boxes-roles-menu li a').click(function () {
       var name = $(this).data('role');
-      var $drop = $(this).closest('.boxes-drop').prev('.boxes-drop-roles');
+      var $drop = $(this).closest('.boxes-drop-group').prev('.boxes-drop-roles');
       var $role = $('.boxes-role[data-name="' + name + '"]');
       var $count = $role.find('input.number-picker');
       var $flavor = $role.find('input.boxes-flavor');
@@ -217,15 +217,18 @@
     border-color: #73d216;
     color: #4e9a06;
 }
-.boxes-role-object-storage {
+.boxes-role-swift-storage {
     background-color: #729fcf;
     border-color: #3465a4;
     color: #204a87;
 }
-.boxes-role-block-storage {
+.boxes-role-cinder-storage {
     background-color: #ad7fa8;
     border-color: #75507b;
     color: #5c3566;
+}
+.boxes-drop-group {
+  width: 100%;
 }
 .boxes-drop {
     position: relative;
@@ -236,6 +239,7 @@
     background-color: #eee;
     border-color: #666;
     color: #444;
+    cursor: pointer;
 }
 .boxes-drop-active {
     background-color: #ccc;
