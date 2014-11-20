@@ -1,0 +1,9 @@
+Verified+2: Jenkins
+Code-Review+2: Tzu-Mainn Chen <tzumainn@redhat.com>
+Workflow+1: Tzu-Mainn Chen <tzumainn@redhat.com>
+Code-Review+1: Lennart Regebro <lregebro@redhat.com>
+Submitted-by: Jenkins
+Submitted-at: Thu, 20 Nov 2014 15:09:43 +0000
+Reviewed-on: https://review.openstack.org/132254
+Project: stackforge/tuskar-ui-extras
+Branch: refs/heads/master
