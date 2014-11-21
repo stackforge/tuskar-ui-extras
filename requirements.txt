@@ -1,3 +1,5 @@
 pbr>=0.6,!=0.7,<1.0
 horizon
 tuskar-ui
+oauthlib
+requests_oauthlib
