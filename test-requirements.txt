@@ -19,5 +19,5 @@ sphinx>=1.1.2,<1.2
 docutils==0.9.1
 oslosphinx
 
-http://tarballs.openstack.org/horizon/horizon-master.tar.gz#egg=horizon
-http://tarballs.openstack.org/tuskar-ui/tuskar-ui-master.tar.gz#egg=tuskar-ui
+#http://tarballs.openstack.org/horizon/horizon-master.tar.gz#egg=horizon
+#http://tarballs.openstack.org/tuskar-ui/tuskar-ui-master.tar.gz#egg=tuskar-ui
