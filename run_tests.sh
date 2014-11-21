@@ -6,7 +6,7 @@ set -o errexit
 # Increment me any time the environment should be rebuilt.
 # This includes dependency changes, directory renames, etc.
 # Simple integer sequence: 1, 2, 3...
-environment_version=42
+environment_version=43
 #--------------------------------------------------------#
 
 function usage {
@@ -156,7 +156,7 @@ function run_pep8 {
 
 function run_sphinx {
     echo "Building sphinx..."
-    export DJANGO_SETTINGS_MODULE=openstack_dashboard.settings
+    #export DJANGO_SETTINGS_MODULE=openstack_dashboard.settings
     ${command_wrapper} sphinx-build -b html doc/source doc/build/html
     echo "Build complete."
 }
