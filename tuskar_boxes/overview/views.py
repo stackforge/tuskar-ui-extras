@@ -12,10 +12,15 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+import collections
+
+from django.core.urlresolvers import reverse
 import django.utils.text
+from openstack_dashboard.api import base as api_base
+
 from tuskar_ui import api
 from tuskar_ui.infrastructure.overview import views
-
+from tuskar_ui.utils import metering
 from tuskar_boxes.overview import forms
 
 
@@ -114,10 +119,37 @@ class IndexView(views.IndexView):
             context['flavors'] = list(
                 _flavor_data(self.request, flavors, flavor_roles))
         else:
-            context['nodes'] = list(_node_data(
-                self.request,
-                api.node.Node.list(self.request, maintenance=False),
-            ))
+            nodes = []
+            for node in api.node.Node.list(self.request, maintenance=False):
+                role = node_role(self.request, node)
+                nodes.append({
+                    'uuid': node.uuid,
+                    'role_name': role.name if role else '',
+                    'role_slug': (
+                        django.utils.text.slugify(role.name) if role else ''),
+                    'state': node.state,
+                    'state_slug': django.utils.text.slugify(
+                        unicode(node.state)),
+                    'state_icon': NODE_STATE_ICON.get(node.state,
+                                                      NODE_STATE_ICON[None]),
+                })
+                nodes.sort(key=lambda node: node.get('role_name'))
+                nodes.reverse()
+            context['nodes'] = nodes
+            distribution = collections.Counter()
+            for node in nodes:
+                distribution[node['role_name']] += 1
+            for role in context['roles']:
+                role['distribution'] = int(float(distribution[role['name']]) /
+                                           len(nodes) * 100)
+            if api_base.is_service_enabled(self.request, 'metering'):
+                for role in context['roles']:
+                    role['graph_url'] = (
+                        reverse('horizon:infrastructure:roles:performance',
+                                args=[role['id']]) + '?' +
+                        metering.url_part('hardware.cpu.load.1min', False) +
+                        '&date_options=1'
+                    )
         return context
 
     def get_progress_update(self, request, data):
