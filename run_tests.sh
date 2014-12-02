@@ -27,7 +27,7 @@ function usage {
   echo "  -p, --pep8               Just run pep8"
   echo "  -t, --tabs               Check for tab characters in files."
   echo "  -y, --pylint             Just run pylint"
-  echo "  -j, --jshint             Just run jshint"
+  echo "  -j, --jshint --eslint    Just run eslint"
   echo "  -q, --quiet              Run non-interactively. (Relatively) quiet."
   echo "                           Implies -V if -N is not set."
   echo "  --only-selenium          Run only the Selenium unit tests"
@@ -98,7 +98,7 @@ function process_option {
     -N|--no-virtual-env) always_venv=0; never_venv=1;;
     -p|--pep8) just_pep8=1;;
     -y|--pylint) just_pylint=1;;
-    -j|--jshint) just_jshint=1;;
+    -j|--jshint|--eslint) just_jshint=1;;
     -f|--force) force=1;;
     -t|--tabs) just_tabs=1;;
     -q|--quiet) quiet=1;;
@@ -144,8 +144,8 @@ function run_pylint {
 }
 
 function run_jshint {
-  echo "Running jshint ..."
-  jshint tuskar_boxes/static/tuskar_boxes
+  echo "Running eslint ..."
+  eslint tuskar_boxes/static/tuskar_boxes
 }
 
 function run_pep8 {
@@ -453,7 +453,7 @@ if [ $just_tabs -eq 1 ]; then
     exit $?
 fi
 
-# Jshint
+# Linting JS
 if [ $just_jshint -eq 1 ]; then
     run_jshint
     exit $?
