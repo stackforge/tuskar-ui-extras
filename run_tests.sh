@@ -55,6 +55,7 @@ root=`pwd`
 venv=$root/.venv
 with_venv=tools/with_venv.sh
 included_dirs="tuskar_sat_ui tuskar_boxes"
+included_dirs="tuskar_boxes tuskar_sat_ui"
 
 always_venv=0
 backup_env=0
