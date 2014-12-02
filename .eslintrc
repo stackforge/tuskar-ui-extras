@@ -1,0 +1,16 @@
+{
+    "env": {
+        "browser": true
+    },
+    "rules": {
+        // Horizon rules (all of these are also default in eslint):
+        "eqeqeq": 1,
+        "strict": 1,
+        "no-undef": 1,
+        "no-eval": 1,
+        "no-with": 1,
+
+        // tuskar-ui-extras special rules:
+        "camelcase": 0,
+    }
+}

@@ -1,13 +1,15 @@
+/* global $ tuskar horizon Hogan */
 tuskar.boxes_progress = function () {
-  'use static';
+  "use strict";
+
   var module = {};
 
   module.init = function () {
-    module.nodes_template = Hogan.compile($('#nodes-template').html() || '');
+    module.nodes_template = Hogan.compile($("#nodes-template").html() || "");
   };
 
   module.update_progress = function (data) {
-    $('div.boxes-nodes').html(module.nodes_template.render(data));
+    $("div.boxes-nodes").html(module.nodes_template.render(data));
   };
 
   // Attach to the original update procedure.
@@ -19,4 +21,4 @@ tuskar.boxes_progress = function () {
 
   horizon.addInitFunction(module.init);
   return module;
-} ();
+}();
