@@ -54,7 +54,7 @@ function usage {
 root=`pwd`
 venv=$root/.venv
 with_venv=tools/with_venv.sh
-included_dirs="tuskar_ui"
+included_dirs="tuskar_boxes tuskar_sat_ui"
 
 always_venv=0
 backup_env=0
@@ -145,7 +145,7 @@ function run_pylint {
 
 function run_jshint {
   echo "Running jshint ..."
-  jshint tuskar_ui/infrastructure/static/infrastructure
+  jshint tuskar_boxes/static/tuskar_boxes
 }
 
 function run_pep8 {
