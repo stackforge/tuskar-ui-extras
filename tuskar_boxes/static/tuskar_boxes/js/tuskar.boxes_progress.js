@@ -1,22 +1,25 @@
-tuskar.boxes_progress = function () {
-  'use static';
+/* global $ tuskar horizon Hogan */
+tuskar.boxesProgress = function() {
+  "use strict";
+  "use static";
+
   var module = {};
 
-  module.init = function () {
-    module.nodes_template = Hogan.compile($('#nodes-template').html() || '');
+  module.init = function() {
+    module.nodesTemplate = Hogan.compile($("#nodes-template").html() || "");
   };
 
-  module.update_progress = function (data) {
-    $('div.boxes-nodes').html(module.nodes_template.render(data));
+  module.updateProgress = function (data) {
+    $("div.boxes-nodes").html(module.nodesTemplate.render(data));
   };
 
   // Attach to the original update procedure.
-  var orig_update_progress = tuskar.deployment_progress.update_progress;
-  tuskar.deployment_progress.update_progress = function () {
-    orig_update_progress.apply(tuskar.deployment_progress, arguments);
-    module.update_progress.apply(module, arguments);
+  var origUpdateProgress = tuskar.deployment_progress.updateProgress;
+  tuskar.deployment_progress.updateProgress = function() {
+    origUpdateProgress.apply(tuskar.deployment_progress, arguments);
+    module.updateProgress.apply(module, arguments);
   };
 
   horizon.addInitFunction(module.init);
   return module;
-} ();
+}();
