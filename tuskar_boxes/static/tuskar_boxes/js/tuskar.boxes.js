@@ -62,6 +62,7 @@ tuskar.boxes = (function () {
           ui.draggable.find('input.boxes-flavor'
               ).val($(this).closest('.boxes-flavor').data('flavor'));
           $count.trigger('change');
+          ui.draggable.find('a[name^=role-edit]').removeClass('hidden');
           window.setTimeout(update_boxes, 0);
         }
     });
@@ -74,6 +75,7 @@ tuskar.boxes = (function () {
           ui.draggable.appendTo(this);
           ui.draggable.find('input.boxes-flavor').val('');
           ui.draggable.find('input.number-picker').trigger('change').val(0);
+          ui.draggable.find('a[name^=role-edit]').addClass('hidden');
           window.setTimeout(update_boxes, 0);
         }
     });
