@@ -19,14 +19,20 @@
 <h4>{% trans "Available Flavors" %}</h4>
 {% for flavor in flavors %}
 <div class="boxes-flavor" data-flavor="{{ flavor.name }}">
-    <p>
-    <strong>{% trans "Flavor:" %}</strong>
-        <i>{{ flavor.name }}</i>
-        {{ flavor.cpu_arch }},
-        {{ flavor.vcpus }} CPU,
-        {{ flavor.ram }}MB RAM,
-        {{ flavor.disk }}GB Disk
-    </p>
+  <div class="row flavor-desc">
+    <div class="col-md-9">
+      <strong>{% trans "Flavor:" %}</strong>
+      <i>{{ flavor.name }}</i>
+      {{ flavor.cpu_arch }},
+      {{ flavor.vcpus }} CPU,
+      {{ flavor.ram }}MB RAM,
+      {{ flavor.disk }}GB Disk
+    </div>
+    <div class="col-md-3">
+      {% trans "Free Nodes:" %}
+      <span class="free-nodes"></span> / {{ flavor.nodes|length }}
+    </div>
+  </div>
     <div class="row">
         <div class="col-xs-5">
             <div class="boxes-drop-roles">
@@ -55,11 +61,11 @@
         </div>
         <div class="col-xs-7 boxes-nodes">
             {% for node in flavor.nodes %}{% spaceless %}
-            <div class="boxes-node">free</div>
+            <div class="boxes-node boxes-role-none">free</div>
             {% endspaceless %}{% endfor %}
         </div>
     </div>
-<div>
+</div>
 {% endfor %}
 
 
