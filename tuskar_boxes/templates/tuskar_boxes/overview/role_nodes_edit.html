@@ -35,6 +35,9 @@
                     {{ role.field|add_bootstrap_class }}
                     {{ role.flavor_field|add_bootstrap_class }}
                     {{ role.name|title }}
+                  <a href="{% url 'horizon:infrastructure:roles:update' role_id=role.id %}" class="btn pull-right">
+                    <b class="fa fa-lg fa-fw fa-pencil"></b>
+                  </a>
                 </div>
             {% endspaceless %}{% endfor %}
             </div>
