@@ -53,7 +53,7 @@
               </ul>
             </div>
         </div>
-        <div class="col-xs-7 boxes-nodes">
+        <div class="col-xs-7 boxes-nodes {% if flavor.nodes|length >= 100 %}boxes-nodes-small{% elif flavor.nodes|length >= 25 %}boxes-nodes-medium{% endif %}">
             {% for node in flavor.nodes %}{% spaceless %}
             <div class="boxes-node">free</div>
             {% endspaceless %}{% endfor %}
