@@ -1,0 +1,9 @@
+Verified+2: Jenkins
+Code-Review+2: Ana Krivokapic <akrivoka@redhat.com>
+Workflow+1: Ana Krivokapic <akrivoka@redhat.com>
+Code-Review+1: Dougal Matthews <dougal@redhat.com>
+Submitted-by: Jenkins
+Submitted-at: Fri, 12 Dec 2014 09:02:03 +0000
+Reviewed-on: https://review.openstack.org/141109
+Project: stackforge/tuskar-ui-extras
+Branch: refs/heads/master
