@@ -100,12 +100,20 @@ class IndexView(views.IndexView):
     def get_data(self, request, context, *args, **kwargs):
         data = super(IndexView, self).get_data(request, context,
                                                *args, **kwargs)
+        nodes = list(_node_data(
+            request, api.node.Node.list(request, maintenance=False),
+        ))
+        nodes.sort(key=lambda node: node.get('role_name'))
+        nodes.reverse()
+        data['nodes'] = nodes
+
         if not data['stack']:
             roles = data['roles']
             free_roles = []
             flavor_roles = {}
             for role in roles:
-                role['flavor_field'] = data['form'][role['id'] + '-flavor']
+                if 'form' in data:
+                    role['flavor_field'] = data['form'][role['id'] + '-flavor']
                 flavor = role['role'].flavor(data['plan'])
                 if flavor:
                     role['flavor_name'] = flavor.name
@@ -120,13 +128,6 @@ class IndexView(views.IndexView):
             data['flavors'] = list(
                 _flavor_data(self.request, flavors, flavor_roles))
         else:
-            nodes = list(_node_data(
-                request, api.node.Node.list(request, maintenance=False),
-            ))
-
-            nodes.sort(key=lambda node: node.get('role_name'))
-            nodes.reverse()
-            data['nodes'] = nodes
             distribution = collections.Counter()
 
             for node in nodes:
