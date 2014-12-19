@@ -13,6 +13,7 @@
 #    under the License.
 
 from django.conf import urls
+from django.views import generic
 from tuskar_ui.infrastructure.overview import urls as tuskar_urls
 
 import tuskar_boxes.overview.views as views
@@ -23,3 +24,5 @@ urlpatterns.extend(urls.patterns(
     '',
     urls.url(r'^$', views.IndexView.as_view(), name='index'),
 ))
+urlpatterns.append(urls.url(r'^qunit_tuskar_boxes$',
+    generic.TemplateView.as_view(template_name="tuskar_boxes/qunit.html")))
