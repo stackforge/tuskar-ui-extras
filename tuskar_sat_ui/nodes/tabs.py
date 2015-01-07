@@ -165,6 +165,7 @@ class DetailOverviewTab(nodes_tabs.DetailOverviewTab):
     template_name = 'infrastructure/nodes/_detail_overview_sat.html'
 
     def get_context_data(self, request, **kwargs):
+        import pdb;pdb.set_trace()
         context = super(DetailOverviewTab,
                         self).get_context_data(request, **kwargs)
         if context['node'].uuid is None:
