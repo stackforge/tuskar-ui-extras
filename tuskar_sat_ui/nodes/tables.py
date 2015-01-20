@@ -16,7 +16,8 @@ from horizon import tables
 
 
 def get_errata_link(errata):
-    return "http://www.google.com"
+    d = errata._asdict()
+    return "{admin_url}/content_hosts/{id}/errata/{errata_id}".format(d)
 
 
 class ErrataTable(tables.DataTable):
