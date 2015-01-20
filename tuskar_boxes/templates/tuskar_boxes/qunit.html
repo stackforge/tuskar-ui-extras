@@ -9,6 +9,7 @@
 
   {% comment %}Load test modules here.{% endcomment %}
   <script type="text/javascript" src="{{ STATIC_URL }}tuskar_boxes/tests/tuskar.boxes.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}tuskar_boxes/tests/tuskar.boxes_progress.js"></script>
   {% comment %}End test modules.{% endcomment %}
 
   {% include "horizon/_scripts.html" %}
@@ -22,5 +23,6 @@
   <h2 id="qunit-userAgent"></h2>
   <ol id="qunit-tests"></ol>
   <div id="qunit-fixture">
+    {% include "tuskar_boxes/overview/_node_info_js.html" %}
   </div>
 </body></html>
