@@ -37,7 +37,9 @@ ErrataItem = collections.namedtuple('ErrataItem', [
     'title',
     'type',
     'id',
+    'errata_id',
     'issued',
+    'host',
 ])
 
 
@@ -134,8 +136,8 @@ def _find_uuid_by_mac(host, auth, organization, addresses):
     url = '{host}/katello/api/v2/systems'.format(host=host)
     for mac in addresses:
         for interface in ['eth0', 'eth1', 'en0', 'en1']:
-            q = 'facts.net.interface.{iface}.mac_address:{mac}'.format(
-                iface=interface, mac=mac)
+            q = 'facts.net.interface.{iface}.mac_address:"{mac}"'.format(
+                iface=interface, mac=mac.upper())
             params = {'search': q, 'organization_id': organization}
             r = requests.get(url, params=params, auth=auth,
                              verify=VERIFY_SSL)
@@ -156,8 +158,8 @@ def _get_errata_data(self, host, auth, uuid):
     errata = r.json()['contexts']
     if not errata:
         raise NoErrataError()
-    data = [ErrataItem(x['title'], x['type'], x['id'], x['issued'])
-            for x in errata]
+    data = [ErrataItem(x['title'], x['type'], x['id'], x['errata_id'],
+            x['issued'], host) for x in errata]
     return data
 
 
