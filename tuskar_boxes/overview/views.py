@@ -144,6 +144,9 @@ class IndexView(views.IndexView):
                     flavor_roles.setdefault(flavor.name, []).append(role)
                 else:
                     role['flavor_name'] = ''
+                    field = role.get('flavor_field')
+                    if field:
+                        field.initial = 0
                     free_roles.append(role)
             data['free_roles'] = free_roles
             data['flavors'] = list(
